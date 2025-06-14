@@ -1,85 +1,30 @@
-<nav *ngIf="mostrarLayout" class="navbar navbar-expand-md navbar-dark bg-dark sticky-top shadow-sm p-0">
-  <div class="container-fluid d-flex align-items-center w-100 px-0" style="min-width:0;">
-    <!-- IZQUIERDA: Secciones -->
-    <ul class="navbar-nav flex-row flex-grow-1 justify-content-start">
-      <li class="nav-item me-3"><a class="nav-link fs-5" routerLink="/mujer">👩 Mujer</a></li>
-      <li class="nav-item me-3"><a class="nav-link fs-5" routerLink="/hombre">👨 Hombre</a></li>
-      <li class="nav-item me-3"><a class="nav-link fs-5" routerLink="/nino">👦 Niño</a></li>
-      <li class="nav-item me-3"><a class="nav-link fs-5" routerLink="/nina">👧 Niña</a></li>
-    </ul>
-
-    <!-- CENTRO: Logo -->
-    <a class="navbar-brand fw-bold fs-4 mx-3 flex-shrink-0" routerLink="/">
+<nav class="navbar">
+  <div class="navbar-logo">
+    <a routerLink="/">
       <img src="img/general/logo.svg" alt="logo de la tienda" style="height: 60px;" />
     </a>
-
-    <!-- DERECHA: Info y perfil -->
-    <ul class="navbar-nav flex-row flex-grow-1 justify-content-end align-items-center">
-      <li class="nav-item me-3"><a class="nav-link fs-5" routerLink="/mas-informacion">ℹ️ Más Información</a></li>
-
-      <ng-container *ngIf="cliente; else noAuth">
-        <li class="nav-item me-3 position-relative">
-          <a class="nav-link fs-5" routerLink="/carrito" title="Ver carrito">
-            🛒
-            <span *ngIf="carritoService.getItems().length > 0"
-              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-              {{ carritoService.getItems().length }}
-            </span>
-          </a>
-        </li>
-        <li class="nav-item me-3">
-          <a class="nav-link fs-5" routerLink="/perfil" title="Ver perfil">👤 {{ cliente.nombre }}</a>
-        </li>
-        <li class="nav-item me-3 text-warning" *ngIf="esAdmin">
-          <a class="nav-link" routerLink="/admin" title="Panel Admin">⚙️ Panel Admin</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link fs-5 text-danger" role="button" (click)="logout()" title="Cerrar sesión">🚪 Cerrar sesión</a>
-        </li>
-      </ng-container>
-
-      <ng-template #noAuth>
-        <li class="nav-item me-3"><a class="nav-link fs-5" routerLink="/login">🔐 Iniciar sesión</a></li>
-        <li class="nav-item"><a class="nav-link fs-5" routerLink="/register">📝 Registrarte</a></li>
-      </ng-template>
-    </ul>
-
-    <!-- Botón del offcanvas SOLO visible en pantallas pequeñas -->
-    <button class="navbar-toggler d-md-none ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
   </div>
-
-  <!-- OFFCANVAS para móviles -->
-  <div class="offcanvas offcanvas-end text-bg-dark d-md-none" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menú</h5>
-      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
-    </div>
-    <div class="offcanvas-body">
-      <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 text-center">
-        <li class="nav-item"><a class="nav-link fs-5" routerLink="/mujer">👩 Mujer</a></li>
-        <li class="nav-item"><a class="nav-link fs-5" routerLink="/hombre">👨 Hombre</a></li>
-        <li class="nav-item"><a class="nav-link fs-5" routerLink="/nino">👦 Niño</a></li>
-        <li class="nav-item"><a class="nav-link fs-5" routerLink="/nina">👧 Niña</a></li>
-        <li class="nav-item"><a class="nav-link fs-5" routerLink="/mas-informacion">ℹ️ Más Información</a></li>
-
-        <ng-container *ngIf="cliente; else noAuthMobile">
-          <li class="nav-item" *ngIf="esAdmin"><a routerLink="/admin" class="nav-link text-warning">⚙️ Panel Admin</a></li>
-          <li class="nav-item"><a class="nav-link fs-5" routerLink="/carrito">🛒 Carrito</a></li>
-          <li class="nav-item"><a class="nav-link fs-5" routerLink="/perfil">👤 {{ cliente.nombre }}</a></li>
-          <li class="nav-item"><a class="nav-link fs-5 text-danger" (click)="logout()">🚪 Cerrar sesión</a></li>
-        </ng-container>
-
-        <ng-template #noAuthMobile>
-          <li class="nav-item"><a class="nav-link fs-5" routerLink="/login">🔐 Login</a></li>
-          <li class="nav-item"><a class="nav-link fs-5" routerLink="/register">📝 Register</a></li>
-        </ng-template>
-      </ul>
-    </div>
+  <ul class="navbar-links" id="navbarLinks">
+    <li><a routerLink="/mujer">👩 Mujer</a></li>
+    <li><a routerLink="/hombre">👨 Hombre</a></li>
+    <li><a routerLink="/nino">👦 Niño</a></li>
+    <li><a routerLink="/nina">👧 Niña</a></li>
+    <li><a routerLink="/mas-informacion">ℹ️ Más Información</a></li>
+    <ng-container *ngIf="cliente; else noAuth">
+      <li *ngIf="esAdmin"><a routerLink="/admin" class="text-warning">⚙️ Panel Admin</a></li>
+      <li><a routerLink="/carrito">🛒 Carrito <span *ngIf="carritoService.getItems().length > 0" class="badge bg-danger">{{ carritoService.getItems().length }}</span></a></li>
+      <li><a routerLink="/perfil">👤 {{ cliente.nombre }}</a></li>
+      <li><a class="text-danger" role="button" (click)="logout()">🚪 Cerrar sesión</a></li>
+    </ng-container>
+    <ng-template #noAuth>
+      <li><a routerLink="/login">🔐 Iniciar sesión</a></li>
+      <li><a routerLink="/register">📝 Registrarte</a></li>
+    </ng-template>
+  </ul>
+  <div class="navbar-toggle" id="navbarToggle" (click)="toggleMenu()">
+    &#9776;
   </div>
 </nav>
-
 
 
 <!-- Contenido principal -->
