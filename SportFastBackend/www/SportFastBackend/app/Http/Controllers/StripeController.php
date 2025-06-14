@@ -30,8 +30,8 @@ class StripeController extends Controller
                 'payment_method_types' => ['card'],
                 'line_items' => $lineItems,
                 'mode' => 'payment',
-                'success_url' => 'http://localhost:4200/carrito',
-                'cancel_url' => 'http://localhost:4200/carrito',
+                'success_url' => 'https://sportfast.zapto.org/carrito',
+                'cancel_url' => 'http://sportfast.zapto.org/carrito',
             ]);
             return response()->json(['url' => $session->url]);
 
