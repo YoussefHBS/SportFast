@@ -1,0 +1,78 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow" role="form" aria-label="Formulario de registro de usuario">
+        <div class="card-header text-center">
+          <h4>Registro de Usuario</h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="form" (ngSubmit)="register()" aria-label="Formulario de registro">
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" id="nombre" class="form-control" formControlName="nombre" aria-required="true" aria-label="Nombre">
+              <div *ngIf="form.get('nombre')?.invalid && form.get('nombre')?.touched" class="text-danger small">
+                El nombre es obligatorio.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="apellido1" class="form-label">Primer Apellido</label>
+              <input type="text" id="apellido1" class="form-control" formControlName="apellido1" aria-required="true" aria-label="Primer Apellido">
+              <div *ngIf="form.get('apellido1')?.invalid && form.get('apellido1')?.touched" class="text-danger small">
+                El primer apellido es obligatorio.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="direccion" class="form-label">Dirección</label>
+              <input type="text" id="direccion" class="form-control" formControlName="direccion" aria-required="true" aria-label="Dirección">
+              <div *ngIf="form.get('direccion')?.invalid && form.get('direccion')?.touched" class="text-danger small">
+                La dirección es obligatoria.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="telefono" class="form-label">Teléfono</label>
+              <input type="tel" id="telefono" class="form-control" formControlName="telefono" aria-required="true" aria-label="Teléfono">
+              <div *ngIf="form.get('telefono')?.invalid && form.get('telefono')?.touched" class="text-danger small">
+                El teléfono es obligatorio.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="correo" class="form-label">Correo electrónico</label>
+              <input type="email" id="correo" class="form-control" formControlName="correo" aria-required="true" aria-label="Correo electrónico">
+              <div *ngIf="form.get('correo')?.invalid && form.get('correo')?.touched" class="text-danger small">
+                Introduce un correo válido.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Contraseña</label>
+              <input type="password" id="password" class="form-control" formControlName="password" aria-required="true" aria-label="Contraseña">
+              <div *ngIf="form.get('password')?.invalid && form.get('password')?.touched" class="text-danger small">
+                La contraseña es obligatoria.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="password_confirmation" class="form-label">Confirmar contraseña</label>
+              <input type="password" id="password_confirmation" class="form-control" formControlName="password_confirmation" aria-required="true" aria-label="Confirmar contraseña">
+              <div *ngIf="form.get('password_confirmation')?.invalid && form.get('password_confirmation')?.touched" class="text-danger small">
+                Debes confirmar la contraseña.
+              </div>
+              <div *ngIf="form.value.password !== form.value.password_confirmation && form.get('password_confirmation')?.touched" class="text-danger small">
+                Las contraseñas no coinciden.
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100" [disabled]="form.invalid">Registrarse</button>
+          </form>
+        </div>
+        <div class="card-footer text-center">
+          <a routerLink="/login" class="nav-link">¿Ya tienes cuenta? Inicia sesión</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,129 @@
+<div class="container py-5" role="main" aria-label="Ropa deportiva para mujer">
+  <h1 class="text-center mb-4" tabindex="0">Ropa Deportiva para Mujer</h1>
+
+  <!-- Búsqueda -->
+  <div class="mb-4">
+    <input
+      type="text"
+      class="form-control form-control-lg shadow-sm"
+      placeholder="Buscar producto..."
+      [(ngModel)]="busqueda"
+      aria-label="Buscar producto"
+    />
+  </div>
+
+  <!-- Lista de productos -->
+  <div class="row g-4">
+    <div class="col-md-6 col-lg-4" *ngFor="let producto of productosFiltrados">
+      <div class="card h-100 shadow-sm border-0" tabindex="0" aria-label="Producto {{ producto.nombre }}">
+        <img
+          [src]="producto.imagen"
+          [alt]="producto.nombre"
+          class="card-img-top"
+          style="object-fit: contain; height: 220px;"
+        />
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title fw-bold">{{ producto.nombre }}</h5>
+          <p class="text-muted mb-2">{{ producto.descripcion }}</p>
+
+          <!-- PRECIO en amarillo -->
+          <p class="fs-5 text-warning fw-semibold mb-2">
+            {{ producto.precio }}€
+          </p>
+
+          <!-- Botón de detalles -->
+          <button
+            class="btn btn-outline-dark mt-auto"
+            (click)="abrirModal(producto)"
+            aria-label="Ver detalles de {{ producto.nombre }}">
+            Ver detalles 🛒
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de producto -->
+  <div
+    class="modal fade"
+    [ngClass]="{ show: modalAbierto }"
+    [ngStyle]="{ display: modalAbierto ? 'block' : 'none' }"
+    tabindex="-1"
+    role="dialog"
+    aria-modal="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ productoSeleccionado?.nombre }}</h5>
+          <button
+            type="button"
+            class="btn-close"
+            (click)="cerrarModal()"
+            aria-label="Cerrar"></button>
+        </div>
+
+        <div class="modal-body">
+          <img
+            [src]="productoSeleccionado?.imagen"
+            class="img-fluid mb-3"
+            [alt]="productoSeleccionado?.nombre"
+          />
+          <p class="text-muted">{{ productoSeleccionado?.descripcion }}</p>
+
+          <!-- Color -->
+          <div class="mb-3">
+            <label class="form-label">Color</label>
+            <select
+              class="form-select"
+              [(ngModel)]="colorSeleccionado"
+              [ngModelOptions]="{ standalone: true }"
+            >
+              <option [ngValue]="null" disabled>Selecciona un color</option>
+              <option *ngFor="let color of coloresDisponibles" [ngValue]="color">
+                {{ color.nombre }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Talla -->
+          <div class="mb-3">
+            <label class="form-label">Talla</label>
+            <select
+              class="form-select"
+              [(ngModel)]="tallaSeleccionada"
+              [ngModelOptions]="{ standalone: true }"
+            >
+              <option [ngValue]="null" disabled>Selecciona una talla</option>
+              <option *ngFor="let talla of tallasDisponibles" [ngValue]="talla">
+                {{ talla.nombre }}
+              </option>
+            </select>
+          </div>
+
+          <!-- Cantidad -->
+          <div class="mb-3">
+            <label class="form-label">Cantidad</label>
+            <input
+              type="number"
+              class="form-control"
+              min="1"
+              [(ngModel)]="cantidad"
+              [ngModelOptions]="{ standalone: true }"
+            />
+          </div>
+
+          <!-- Precio -->
+          <p class="fs-4 text-primary">
+            {{ productoSeleccionado?.precio }}€
+          </p>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="cerrarModal()">Cerrar</button>
+          <button class="btn btn-primary" (click)="anadirACarrito()">Añadir al carrito</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

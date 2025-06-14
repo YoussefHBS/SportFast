@@ -1,0 +1,121 @@
+<nav *ngIf="mostrarLayout" class="navbar navbar-expand-md navbar-dark bg-dark sticky-top shadow-sm p-0">
+  <div class="container-fluid d-flex align-items-center w-100 px-0" style="min-width:0;">
+    <!-- IZQUIERDA: Secciones -->
+    <ul class="navbar-nav flex-row flex-grow-1 justify-content-start">
+      <li class="nav-item me-3"><a class="nav-link fs-5" routerLink="/mujer">👩 Mujer</a></li>
+      <li class="nav-item me-3"><a class="nav-link fs-5" routerLink="/hombre">👨 Hombre</a></li>
+      <li class="nav-item me-3"><a class="nav-link fs-5" routerLink="/nino">👦 Niño</a></li>
+      <li class="nav-item me-3"><a class="nav-link fs-5" routerLink="/nina">👧 Niña</a></li>
+    </ul>
+
+    <!-- CENTRO: Logo -->
+    <a class="navbar-brand fw-bold fs-4 mx-3 flex-shrink-0" routerLink="/">
+      <img src="img/general/logo.svg" alt="logo de la tienda" style="height: 60px;" />
+    </a>
+
+    <!-- DERECHA: Info y perfil -->
+    <ul class="navbar-nav flex-row flex-grow-1 justify-content-end align-items-center">
+      <li class="nav-item me-3"><a class="nav-link fs-5" routerLink="/mas-informacion">ℹ️ Más Información</a></li>
+
+      <ng-container *ngIf="cliente; else noAuth">
+        <li class="nav-item me-3 position-relative">
+          <a class="nav-link fs-5" routerLink="/carrito" title="Ver carrito">
+            🛒
+            <span *ngIf="carritoService.getItems().length > 0"
+              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              {{ carritoService.getItems().length }}
+            </span>
+          </a>
+        </li>
+        <li class="nav-item me-3">
+          <a class="nav-link fs-5" routerLink="/perfil" title="Ver perfil">👤 {{ cliente.nombre }}</a>
+        </li>
+        <li class="nav-item me-3 text-warning" *ngIf="esAdmin">
+          <a class="nav-link" routerLink="/admin" title="Panel Admin">⚙️ Panel Admin</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fs-5 text-danger" role="button" (click)="logout()" title="Cerrar sesión">🚪 Cerrar sesión</a>
+        </li>
+      </ng-container>
+
+      <ng-template #noAuth>
+        <li class="nav-item me-3"><a class="nav-link fs-5" routerLink="/login">🔐 Iniciar sesión</a></li>
+        <li class="nav-item"><a class="nav-link fs-5" routerLink="/register">📝 Registrarte</a></li>
+      </ng-template>
+    </ul>
+
+    <!-- Botón del offcanvas SOLO visible en pantallas pequeñas -->
+    <button class="navbar-toggler d-md-none ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+
+  <!-- OFFCANVAS para móviles -->
+  <div class="offcanvas offcanvas-end text-bg-dark d-md-none" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menú</h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 text-center">
+        <li class="nav-item"><a class="nav-link fs-5" routerLink="/mujer">👩 Mujer</a></li>
+        <li class="nav-item"><a class="nav-link fs-5" routerLink="/hombre">👨 Hombre</a></li>
+        <li class="nav-item"><a class="nav-link fs-5" routerLink="/nino">👦 Niño</a></li>
+        <li class="nav-item"><a class="nav-link fs-5" routerLink="/nina">👧 Niña</a></li>
+        <li class="nav-item"><a class="nav-link fs-5" routerLink="/mas-informacion">ℹ️ Más Información</a></li>
+
+        <ng-container *ngIf="cliente; else noAuthMobile">
+          <li class="nav-item" *ngIf="esAdmin"><a routerLink="/admin" class="nav-link text-warning">⚙️ Panel Admin</a></li>
+          <li class="nav-item"><a class="nav-link fs-5" routerLink="/carrito">🛒 Carrito</a></li>
+          <li class="nav-item"><a class="nav-link fs-5" routerLink="/perfil">👤 {{ cliente.nombre }}</a></li>
+          <li class="nav-item"><a class="nav-link fs-5 text-danger" (click)="logout()">🚪 Cerrar sesión</a></li>
+        </ng-container>
+
+        <ng-template #noAuthMobile>
+          <li class="nav-item"><a class="nav-link fs-5" routerLink="/login">🔐 Login</a></li>
+          <li class="nav-item"><a class="nav-link fs-5" routerLink="/register">📝 Register</a></li>
+        </ng-template>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+<!-- Contenido principal -->
+<main class="container mt-4">
+  <router-outlet></router-outlet>
+</main>
+
+<!-- Footer -->
+<footer *ngIf="mostrarLayout" class="bg-dark text-light pt-3 mt-4">
+  <div class="container">
+    <div class="row text-center text-md-start small">
+      <!-- Contacto -->
+      <div class="col-md-4 mb-3">
+        <h6 class="fw-bold mb-2">📞 Contacto</h6>
+        <p class="mb-1"><i class="bi bi-envelope-fill me-2"></i> contacto&#64;sportfast.com</p>
+        <p class="mb-1"><i class="bi bi-telephone-fill me-2"></i> +34 912 345 678</p>
+        <p class="mb-0"><i class="bi bi-geo-alt-fill me-2"></i> Ronda 4001, Almería, España</p>
+      </div>
+
+      <!-- Mapa -->
+      <div class="col-md-4 mb-3">
+        <h6 class="fw-bold mb-2">📍 Encuéntranos</h6>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1276.5942679826465!2d-2.458773!3d36.827916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd7a9dee6b383edf%3A0xdccd0b1c0b4eae94!2sZizou!5e0!3m2!1ses!2ses!4v1707742384015!5m2!1ses!2ses"
+          width="100%"
+          height="160"
+          style="border:0; border-radius: 8px;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+    </div>
+
+    <div class="text-center py-2 border-top border-light mt-3 small">
+      <small>&copy; {{ currentYear }} SportFast. Todos los derechos reservados.</small>
+    </div>
+  </div>
+</footer>

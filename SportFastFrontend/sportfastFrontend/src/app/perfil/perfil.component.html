@@ -1,0 +1,18 @@
+<div class="container my-5" role="main" aria-label="Perfil de usuario">
+  <h2 class="text-center mb-4" tabindex="0">👤 Mi Perfil</h2>
+
+  <div *ngIf="cargando" class="text-center">
+    <div class="spinner-border text-primary" role="status" aria-label="Cargando"></div>
+  </div>
+
+  <div *ngIf="!cargando && usuario" class="card shadow-sm p-4" aria-label="Datos del usuario">
+    <p><strong>Nombre:</strong> {{ usuario.nombre }}</p>
+    <p><strong>Email:</strong> {{ usuario.correo }}</p>
+    <p><strong>Teléfono:</strong> {{ usuario.telefono || 'No registrado' }}</p>
+    <p><strong>Dirección:</strong> {{ usuario.direccion || 'No registrada' }}</p>
+  </div>
+
+  <div *ngIf="!cargando && !usuario" class="alert alert-warning text-center" role="alert">
+    No se pudo cargar la información del perfil.
+  </div>
+</div>
