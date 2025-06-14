@@ -1,0 +1,54 @@
+services:
+  frontend:
+    build:
+      context: ./Sportfastfrontend/sportfastfrontend
+    container_name: sportfast_frontend
+    ports:
+      - "4200:80"
+    networks:
+      - sportfast_network
+    volumes:
+      - ./Sportfastfrontend/sportfastfrontend:/src/app
+    # command: npm start  # solo si no está ya en el Dockerfile
+
+  backend:
+    build:
+      context: ./Sportfastbackend/www
+    container_name: sportfast_backend
+    ports:
+      - "8000:80"
+    volumes:
+      - ./Sportfastbackend/www:/var/www/html
+    depends_on:
+      - mariadb
+    networks:
+      - sportfast_network
+
+  mariadb:
+    image: mariadb:10.11
+    container_name: sportfast_db
+    environment:
+      MYSQL_ROOT_PASSWORD: password123
+    volumes:
+      - mysqldata:/var/lib/mysql
+    networks:
+      - sportfast_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: sportfast_phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mariadb
+    depends_on:
+      - mariadb
+    networks:
+      - sportfast_network
+
+volumes:
+  mysqldata:
+
+networks:
+  sportfast_network:
+    driver: bridge
