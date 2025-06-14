@@ -7,7 +7,7 @@ services:
     volumes:
       - ./SportFastBackend/www/SportFastBackend:/var/www
     ports:
-      - "9000:9000"
+      - "8000:8000"
     environment:
       - DB_HOST=db
       - DB_DATABASE=sportfast
@@ -34,6 +34,18 @@ services:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      - PMA_HOST=db
+      - PMA_USER=root
+      - PMA_PASSWORD=root
+    depends_on:
+      - db
 
 volumes:
   db_data:
