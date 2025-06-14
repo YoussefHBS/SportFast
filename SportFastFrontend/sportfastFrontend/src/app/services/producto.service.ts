@@ -10,7 +10,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class ProductoService {
-  private apiUrl = 'http://localhost:8000/api/productos';
+  private apiUrl = 'http://100.28.234.102:8000/api/productos';
 
 constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -23,7 +23,7 @@ private getAuthHeaders(): HttpHeaders {
   }
 
 getAdminProductos(): Observable<Producto[]> {
-  return this.http.get<Producto[]>('http://localhost:8000/api/admin/productos', {
+  return this.http.get<Producto[]>('http://100.28.234.102:8000/api/admin/productos', {
     headers: this.authService.getAuthHeaders()
   });
 }
@@ -63,19 +63,19 @@ getAdminProductos(): Observable<Producto[]> {
 
 
   crearProducto(producto: Producto): Observable<Producto> {
-    return this.http.post<Producto>('http://localhost:8000/api/admin/productos', producto, {
+    return this.http.post<Producto>('http://100.28.234.102:8000/api/admin/productos', producto, {
       headers: this.getAuthHeaders()
     });
   }
 
   eliminarProducto(id: number): Observable<any> {
-    return this.http.delete(`http://localhost:8000/api/admin/productos/${id}`, {
+    return this.http.delete(`http://100.28.234.102:8000/api/admin/productos/${id}`, {
       headers: this.getAuthHeaders()
     });
   }
   actualizarProducto(id: number, producto: Producto): Observable<Producto> {
   return this.http.put<Producto>(
-    `http://localhost:8000/api/admin/productos/${id}`,
+    `http://100.28.234.102:8000/api/admin/productos/${id}`,
     producto,
     { headers: this.getAuthHeaders() }
   );
