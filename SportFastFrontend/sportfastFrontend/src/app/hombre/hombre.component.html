@@ -15,7 +15,7 @@
   <!-- Lista de productos -->
   <div class="row g-4">
     <div class="col-md-6 col-lg-4" *ngFor="let producto of productosFiltrados">
-      <div class="card h-100 shadow-sm border-0" tabindex="0" aria-label="Producto {{ producto.nombre }}">
+      <div class="card h-100 shadow-sm border-0" tabindex="0" aria-label="Producto">
         <img
           [src]="producto.imagen"
           [alt]="producto.nombre"
@@ -35,7 +35,7 @@
           <button
             class="btn btn-outline-dark mt-auto"
             (click)="abrirModal(producto)"
-            aria-label="Ver detalles de {{ producto.nombre }}">
+            aria-label="Ver detalles">
             Ver detalles 🛒
           </button>
         </div>
