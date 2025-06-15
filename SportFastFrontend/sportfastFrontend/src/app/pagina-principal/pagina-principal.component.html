@@ -40,26 +40,17 @@
   </div>
 
   <div
-    class="modal fade"
-    [ngClass]="{ show: modalAbierto }"
-    [ngStyle]="{ display: modalAbierto ? 'block' : 'none' }"
-    tabindex="-1"
-    role="dialog"
-    aria-modal="true"
+    class="custom-modal-backdrop"
+    *ngIf="modalAbierto"
+    (click)="cerrarModal()"
   >
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">{{ productoSeleccionado?.nombre }}</h5>
-          <button
-            type="button"
-            class="btn-close"
-            (click)="cerrarModal()"
-            aria-label="Cerrar"></button>
-        </div>
-
-        <div class="modal-body">
-          <div *ngIf="productoSeleccionado && productoSeleccionado.cantidad === 0" class="alert alert-danger">Producto agotado</div>
+    <div class="custom-modal" (click)="$event.stopPropagation()">
+      <div class="custom-modal-header">
+        <h5 class="custom-modal-title">{{ productoSeleccionado?.nombre }}</h5>
+        <button type="button" class="custom-modal-close" (click)="cerrarModal()" aria-label="Cerrar">×</button>
+      </div>
+      <div class="custom-modal-body">
+        <div *ngIf="productoSeleccionado && productoSeleccionado.cantidad === 0" class="alert alert-danger">Producto agotado</div>
           <div *ngIf="productoSeleccionado && productoSeleccionado.cantidad > 0 && productoSeleccionado.cantidad <= 3" class="alert alert-warning">¡Quedan pocas unidades!</div>
           <img
             [src]="productoSeleccionado?.imagen"
@@ -102,8 +93,9 @@
               type="number"
               class="form-control"
               min="1"
-              max="{{ productoSeleccionado?.cantidad }}"
+              [max]="productoSeleccionado?.cantidad ?? null"
               [(ngModel)]="cantidad"
+              (ngModelChange)="actualizarCantidad()"
               [ngModelOptions]="{ standalone: true }"
             />
             <div *ngIf="productoSeleccionado?.cantidad !== undefined">
@@ -115,12 +107,10 @@
           <p class="fs-4 text-primary">
             {{ productoSeleccionado?.precio }}€
           </p>
-        </div>
-
-        <div class="modal-footer">
-          <button class="btn btn-secondary" (click)="cerrarModal()">Cerrar</button>
-          <button class="btn btn-primary" (click)="anadirACarrito()">Añadir al carrito</button>
-        </div>
+      </div>
+      <div class="custom-modal-footer">
+        <button class="btn btn-secondary" (click)="cerrarModal()">Cerrar</button>
+        <button class="btn btn-primary" (click)="anadirACarrito()">Añadir al carrito</button>
       </div>
     </div>
   </div>

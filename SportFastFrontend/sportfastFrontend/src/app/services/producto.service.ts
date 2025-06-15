@@ -81,7 +81,7 @@ getAdminProductos(): Observable<Producto[]> {
 }
 
 actualizarCantidad(id: number, cantidad: number) {
-  return this.http.patch(`/api/productos/${id}`, { cantidad });
+  return this.http.put(`/api/productos/${id}`, { cantidad });
 }
 
 

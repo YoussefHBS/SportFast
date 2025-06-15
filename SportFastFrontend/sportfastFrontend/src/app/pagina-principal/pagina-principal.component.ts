@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductoService } from '../services/producto.service';
 import { Producto } from '../modelos/producto';
+import { Color } from '../modelos/color';
+import { Talla } from '../modelos/talla';
 import { CarritoService } from '../services/carrito.service';
 import { ItemCarrito } from '../modelos/itemcarrito';
 
@@ -11,12 +13,12 @@ import { ItemCarrito } from '../modelos/itemcarrito';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './pagina-principal.component.html',
+  styleUrls: ['./pagina-principal.component.css'],
 })
 
 export class PaginaPrincipalComponent implements OnInit {
   productos: Producto[] = [];
   busqueda: string = '';
-
   modalAbierto: boolean = false;
   productoSeleccionado?: Producto;
   colorSeleccionado?: any;
@@ -82,16 +84,21 @@ export class PaginaPrincipalComponent implements OnInit {
     this.productoSeleccionado = undefined;
   }
 
+  actualizarCantidad() {
+    if (this.cantidad > (this.productoSeleccionado?.cantidad ?? 0)) {
+      this.mensajeStock = 'No puedes añadir más de la cantidad disponible.';
+      this.cantidad = this.productoSeleccionado?.cantidad ?? 1;
+    } else {
+      this.mensajeStock = '';
+    }
+  }
+
   anadirACarrito(): void {
     if (!this.productoSeleccionado || !this.tallaSeleccionada || !this.colorSeleccionado) {
       return;
     }
-    if (this.productoSeleccionado.cantidad === 0) {
-      alert('Producto agotado');
-      return;
-    }
     if (this.cantidad > this.productoSeleccionado.cantidad) {
-      this.mensajeStock = `No hay suficiente stock. Stock disponible: ${this.productoSeleccionado.cantidad}`;
+      this.mensajeStock = 'No puedes añadir más de la cantidad disponible.';
       return;
     }
     const item: ItemCarrito = {
@@ -105,11 +112,17 @@ export class PaginaPrincipalComponent implements OnInit {
       total: this.cantidad * this.productoSeleccionado.precio,
     };
     this.carritoService.agregarProducto(item);
-    this.productoSeleccionado.cantidad -= this.cantidad;
-    const idx = this.productos.findIndex(p => p.id === this.productoSeleccionado?.id);
-    if (idx !== -1) {
-      this.productos[idx].cantidad = this.productoSeleccionado.cantidad;
-    }
-    this.cerrarModal();
+
+    const nuevaCantidad = this.productoSeleccionado.cantidad - this.cantidad;
+    this.productoService.actualizarCantidad(this.productoSeleccionado.id!, nuevaCantidad)
+      .subscribe({
+        next: () => {
+          this.cargarProductos();
+          this.cerrarModal();
+        },
+        error: () => {
+          this.mensajeStock = 'Error al actualizar el stock.';
+        }
+      });
   }
 }

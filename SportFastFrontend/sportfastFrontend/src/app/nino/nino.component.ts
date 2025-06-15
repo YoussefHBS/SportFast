@@ -13,6 +13,7 @@ import { ItemCarrito } from '../modelos/itemcarrito';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './nino.component.html',
+  styleUrls: ['./nino.component.css'],
 })
 export class NinoComponent implements OnInit {
   productos: Producto[] = [];
@@ -25,6 +26,7 @@ export class NinoComponent implements OnInit {
 
   coloresDisponibles: Color[] = [];
   tallasDisponibles: Talla[] = [];
+  mensajeStock: string = '';
 
   constructor(
     private productoService: ProductoService,
@@ -32,6 +34,10 @@ export class NinoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.cargarProductos();
+  }
+
+  cargarProductos(): void {
     this.productoService.getPorCategoria('nino').subscribe({
       next: (res) => {
         this.productos = res;
@@ -54,6 +60,7 @@ export class NinoComponent implements OnInit {
     this.colorSeleccionado = null;
     this.tallaSeleccionada = null;
     this.cantidad = 1;
+    this.mensajeStock = '';
     this.modalAbierto = true;
   }
 
@@ -64,15 +71,23 @@ export class NinoComponent implements OnInit {
     this.tallasDisponibles = [];
   }
 
+  actualizarCantidad() {
+    if (this.cantidad > (this.productoSeleccionado?.cantidad ?? 0)) {
+      this.mensajeStock = 'No puedes añadir más de la cantidad disponible.';
+      this.cantidad = this.productoSeleccionado?.cantidad ?? 1;
+    } else {
+      this.mensajeStock = '';
+    }
+  }
+
   anadirACarrito(): void {
     if (!this.productoSeleccionado || !this.tallaSeleccionada || !this.colorSeleccionado) {
       return;
     }
-    if (this.productoSeleccionado.cantidad === 0) {
-      alert('Producto agotado');
+    if (this.cantidad > this.productoSeleccionado.cantidad) {
+      this.mensajeStock = 'No puedes añadir más de la cantidad disponible.';
       return;
     }
-
     const item: ItemCarrito = {
       nombre: this.productoSeleccionado.nombre,
       pedido_id: 0,
@@ -83,8 +98,18 @@ export class NinoComponent implements OnInit {
       talla: this.tallaSeleccionada.nombre,
       total: this.cantidad * this.productoSeleccionado.precio,
     };
-
     this.carritoService.agregarProducto(item);
-    this.cerrarModal();
+
+    const nuevaCantidad = this.productoSeleccionado.cantidad - this.cantidad;
+    this.productoService.actualizarCantidad(this.productoSeleccionado.id!, nuevaCantidad)
+      .subscribe({
+        next: () => {
+          this.cargarProductos();
+          this.cerrarModal();
+        },
+        error: () => {
+          this.mensajeStock = 'Error al actualizar el stock.';
+        }
+      });
   }
 }
