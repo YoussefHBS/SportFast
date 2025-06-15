@@ -27,4 +27,4 @@ jobs:
           context: ./SportFastFrontend/sportfastFrontend
           file: ./SportFastFrontend/sportfastFrontend/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/sportfast-frontend:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/sportfast-frontend:latest
