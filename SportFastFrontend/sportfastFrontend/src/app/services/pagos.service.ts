@@ -8,7 +8,7 @@ export class PagoService {
   constructor(private http: HttpClient) {}
 
   crearSesionPago(productos: any[]) {
-    return this.http.post<{ url: string }>('http://100.28.234.102:8000/api/crear-sesion', {
+    return this.http.post<{ url: string }>('http://sportfast.zapto.org:8000/api/crear-sesion', {
       items: productos,
     });
   }

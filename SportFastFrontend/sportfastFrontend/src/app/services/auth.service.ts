@@ -16,11 +16,11 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   register(data: any) {
-    return this.http.post('http://100.28.234.102:8000/api/register', data);
+    return this.http.post('http://sportfast.zapto.org:8000/api/register', data);
   }
 
   login(data: any) {
-    return this.http.post<{ token: string; cliente: Cliente }>('http://100.28.234.102:8000/api/login', data).pipe(
+    return this.http.post<{ token: string; cliente: Cliente }>('http://sportfast.zapto.org:8000/api/login', data).pipe(
       tap((res) => {
         this.token = res.token;
         localStorage.setItem('auth_token', this.token);
@@ -34,7 +34,7 @@ export class AuthService {
     const headers = {
       Authorization: `Bearer ${this.token || localStorage.getItem('auth_token')}`,
     };
-    return this.http.get<Cliente>('http://100.28.234.102:8000/api/user', { headers }).pipe(
+    return this.http.get<Cliente>('http://sportfast.zapto.org:8000/api/user', { headers }).pipe(
       tap((user) => {
         this.usuarioActual = user;
         this.clienteSubject.next(user);
@@ -46,7 +46,7 @@ export class AuthService {
     const headers = {
       Authorization: `Bearer ${this.token || localStorage.getItem('auth_token')}`,
     };
-    return this.http.post('http://100.28.234.102:8000/api/logout', {}, { headers }).pipe(
+    return this.http.post('http://sportfast.zapto.org:8000/api/logout', {}, { headers }).pipe(
       tap(() => {
         this.token = null;
         localStorage.removeItem('auth_token');
@@ -78,7 +78,7 @@ getAuthHeaders(): { [header: string]: string } {
 }
 
   getPerfilUsuario() {
-  return this.http.get('http://100.28.234.102:8000/api/user', {
+  return this.http.get('http://sportfast.zapto.org:8000/api/user', {
     headers: this.getAuthHeaders()
   });
   }

@@ -30,3 +30,18 @@
   color: #ffc107 !important; /* Amarillo Bootstrap para resaltar */
   font-weight: bold;
 }
+
+/* Oculta el menú principal en pantallas pequeñas */
+@media (max-width: 767.98px) {
+  .navbar-nav.d-none.d-md-flex {
+    display: none !important;
+  }
+}
+
+/* Asegura que el offcanvas cubra toda la pantalla en móvil */
+@media (max-width: 767.98px) {
+  .offcanvas.offcanvas-end {
+    width: 80vw;
+    max-width: 100vw;
+  }
+}
