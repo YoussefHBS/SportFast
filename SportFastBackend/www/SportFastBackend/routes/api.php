@@ -66,6 +66,7 @@ Route::get('/productos', [ProductoController::class, 'index']);
 Route::get('/productos/{id}', [ProductoController::class, 'show']);
 Route::post('/productos', [ProductoController::class, 'store']);
 Route::put('/productos/{id}', [ProductoController::class, 'update']);
+Route::patch('/productos/{id}', [ProductoController::class, 'update']);
 Route::delete('/productos/{id}', [ProductoController::class, 'destroy']);
 Route::post('/productos/{id}/colores', [ProductoController::class, 'asignarColores']);
 Route::post('/productos/{id}/tallas', [ProductoController::class, 'asignarTallas']);

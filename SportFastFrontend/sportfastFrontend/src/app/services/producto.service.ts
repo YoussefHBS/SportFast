@@ -80,5 +80,9 @@ getAdminProductos(): Observable<Producto[]> {
   );
 }
 
+actualizarCantidad(id: number, cantidad: number) {
+  return this.http.patch(`/api/productos/${id}`, { cantidad });
+}
+
 
 }
