@@ -20,7 +20,13 @@ services:
     build:
       context: ./SportFastFrontend/sportfastFrontend
     ports:
-      - "4200:80"
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./SportFastFrontend/sportfastFrontend/nginx.conf:/etc/nginx/nginx.conf
+      - /etc/letsencrypt/live/sportfast.zapto.org:/etc/letsencrypt/live/sportfast.zapto.org:ro
+      - /etc/letsencrypt/archive/sportfast.zapto.org:/etc/letsencrypt/archive/sportfast.zapto.org:ro
+      - /etc/letsencrypt/privkey.pem:/etc/letsencrypt/privkey.pem:ro
     depends_on:
       - backend
 
@@ -39,7 +45,7 @@ services:
     image: phpmyadmin/phpmyadmin
     restart: always
     ports:
-      - "8081:80"
+      - "8080:80"
     environment:
       - PMA_HOST=db
       - PMA_USER=root

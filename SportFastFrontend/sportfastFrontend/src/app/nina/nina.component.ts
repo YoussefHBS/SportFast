@@ -67,13 +67,16 @@ export class NinaComponent implements OnInit {
   
     anadirACarrito(): void {
   if (!this.productoSeleccionado || !this.tallaSeleccionada || !this.colorSeleccionado) {
-    console.warn('Faltan datos para añadir al carrito');
+    return;
+  }
+  if (this.productoSeleccionado.cantidad === 0) {
+    alert('Producto agotado');
     return;
   }
 
   const item: ItemCarrito = {
     nombre: this.productoSeleccionado.nombre,
-    pedido_id: 0, // Pendiente, se asigna al crear pedido
+    pedido_id: 0, 
     producto_id: this.productoSeleccionado.id!,
     cantidad: this.cantidad,
     precio_unitario: this.productoSeleccionado.precio,
@@ -86,4 +89,3 @@ export class NinaComponent implements OnInit {
   this.cerrarModal();
 }
   }
-  

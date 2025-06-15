@@ -22,7 +22,6 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    // Esto debe ser una propiedad, no un método
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',

@@ -6,8 +6,6 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\DireccionController;
-use App\Http\Controllers\EstadoPedidoController;
-use App\Http\Controllers\MetodoPagoController;
 use App\Http\Controllers\PagoController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\PedidoDetalleController;
@@ -28,33 +26,19 @@ Route::post('/colores', [ColorController::class, 'store']);
 Route::put('/colores/{id}', [ColorController::class, 'update']);
 Route::delete('/colores/{id}', [ColorController::class, 'destroy']);
 
-// Clientes mal
+// Clientes
 Route::get('/clientes', [ClienteController::class, 'index']);
 Route::get('/clientes/{id}', [ClienteController::class, 'show']);
 Route::post('/clientes', [ClienteController::class, 'store']);
 Route::put('/clientes/{id}', [ClienteController::class, 'update']);
 Route::delete('/clientes/{id}', [ClienteController::class, 'destroy']);
 
-// Direcciones mal
+// Direcciones
 Route::get('/direcciones', [DireccionController::class, 'index']);
 Route::get('/direcciones/{id}', [DireccionController::class, 'show']);
 Route::post('/direcciones', [DireccionController::class, 'store']);
 Route::put('/direcciones/{id}', [DireccionController::class, 'update']);
 Route::delete('/direcciones/{id}', [DireccionController::class, 'destroy']);
-
-// Estado Pedidos mal
-Route::get('/estado_pedidos', [EstadoPedidoController::class, 'index']);
-Route::get('/estado_pedidos/{id}', [EstadoPedidoController::class, 'show']);
-Route::post('/estado_pedidos', [EstadoPedidoController::class, 'store']);
-Route::put('/estado_pedidos/{id}', [EstadoPedidoController::class, 'update']);
-Route::delete('/estado_pedidos/{id}', [EstadoPedidoController::class, 'destroy']);
-
-// Metodo Pagos
-Route::get('/metodo_pagos', [MetodoPagoController::class, 'index']);
-Route::get('/metodo_pagos/{id}', [MetodoPagoController::class, 'show']);
-Route::post('/metodo_pagos', [MetodoPagoController::class, 'store']);
-Route::put('/metodo_pagos/{id}', [MetodoPagoController::class, 'update']);
-Route::delete('/metodo_pagos/{id}', [MetodoPagoController::class, 'destroy']);
 
 // Pagos
 Route::get('/pagos', [PagoController::class, 'index']);
@@ -77,7 +61,7 @@ Route::post('/pedidos_detalles', [PedidoDetalleController::class, 'store']);
 Route::put('/pedidos_detalles/{id}', [PedidoDetalleController::class, 'update']);
 Route::delete('/pedidos_detalles/{id}', [PedidoDetalleController::class, 'destroy']);
 
-// Productos bien
+// Productos
 Route::get('/productos', [ProductoController::class, 'index']);
 Route::get('/productos/{id}', [ProductoController::class, 'show']);
 Route::post('/productos', [ProductoController::class, 'store']);

@@ -1,0 +1,36 @@
+.modal.fade[aria-modal="true"] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.4);
+  z-index: 1050;
+  padding: 0;
+}
+
+.modal-dialog {
+  margin: auto;
+  max-width: 420px;
+  width: 95vw;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-content {
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  border: none;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+@media (max-width: 576px) {
+  .modal-dialog {
+    max-width: 98vw;
+    margin: 0;
+    max-height: 98vh;
+  }
+  .modal-content {
+    border-radius: 0.5rem;
+    max-height: 95vh;
+  }
+}

@@ -10,11 +10,10 @@ export class CarritoService {
   private carrito: ItemCarrito[] = [];
   private carritoSubject = new BehaviorSubject<ItemCarrito[]>([]);
   carrito$ = this.carritoSubject.asObservable();
-  constructor(private pagoService: PagoService) {} // 👈 AÑADE ESTO
+  constructor(private pagoService: PagoService) {}
 
 
   agregarProducto(item: ItemCarrito) {
-    // Evitar duplicados por producto_id + color + talla
     const index = this.carrito.findIndex(p =>
       p.producto_id === item.producto_id &&
       p.color === item.color &&
@@ -48,23 +47,23 @@ export class CarritoService {
    getItems(): ItemCarrito[] {
     return this.carrito;
   }
-  pagarConStripe() {
-  const productos = this.getItems();
+  pagarConStripe(onError?: (mensaje: string) => void) {
+    const productos = this.getItems();
 
-  this.pagoService.crearSesionPago(productos).subscribe({
-    next: (res: any) => {
-      if (res.url) {
-        window.location.href = res.url; // 🔁 Redirige a Stripe
-      } else {
-        alert('No se pudo obtener la URL de Stripe.');
+    this.pagoService.crearSesionPago(productos).subscribe({
+      next: (res: any) => {
+        if (res.url) {
+          window.location.href = res.url;
+        } else {
+          if (onError) onError('No se pudo obtener la URL de Stripe.');
+        }
+      },
+      error: (err) => {
+        console.error('Error al crear sesión de pago:', err);
+        if (onError) onError('Ocurrió un error al procesar el pago.');
       }
-    },
-    error: (err) => {
-      console.error('Error al crear sesión de pago:', err);
-      alert('Ocurrió un error al procesar el pago.');
-    }
-  });
-}
+    });
+  }
 
 
 }

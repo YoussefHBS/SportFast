@@ -2,7 +2,6 @@
 
 return [
 
-    // ...otros servicios...
 
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
@@ -25,7 +24,6 @@ return [
         ],
     ],
 
-    // ✅ Agrega esto:
     'stripe' => [
         'secret' => env('STRIPE_SECRET'),
     ],

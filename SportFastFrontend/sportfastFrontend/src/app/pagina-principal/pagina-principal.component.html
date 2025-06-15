@@ -2,7 +2,6 @@
  <h1 class="text-center mb-4"><img src="img/general/logo.svg" alt="logo de la tienda"/> Bienvenido a <span class="text-primary">SportFast</span></h1>
   <p class="lead text-center mb-5">Explora todos nuestros productos deportivos</p>
 
-  <!-- Búsqueda -->
   <div class="mb-4">
     <input
       type="text"
@@ -13,7 +12,6 @@
     />
   </div>
 
-  <!-- Lista de productos -->
   <div class="row g-4">
     <div class="col-md-6 col-lg-4" *ngFor="let producto of productosFiltrados">
       <div class="card h-100 shadow-sm border-0" tabindex="0" aria-label="Producto">
@@ -27,12 +25,9 @@
           <h5 class="card-title fw-bold">{{ producto.nombre }}</h5>
           <p class="text-muted mb-2">{{ producto.descripcion }}</p>
 
-          <!-- PRECIO en amarillo -->
           <p class="fs-5 text-warning fw-semibold mb-2">
             {{ producto.precio }}€
           </p>
-
-          <!-- Botón de detalles -->
           <button
             class="btn btn-outline-dark mt-auto"
             (click)="abrirModal(producto)"
@@ -44,7 +39,6 @@
     </div>
   </div>
 
-  <!-- Modal de producto -->
   <div
     class="modal fade"
     [ngClass]="{ show: modalAbierto }"
@@ -65,6 +59,8 @@
         </div>
 
         <div class="modal-body">
+          <div *ngIf="productoSeleccionado && productoSeleccionado.cantidad === 0" class="alert alert-danger">Producto agotado</div>
+          <div *ngIf="productoSeleccionado && productoSeleccionado.cantidad > 0 && productoSeleccionado.cantidad <= 3" class="alert alert-warning">¡Quedan pocas unidades!</div>
           <img
             [src]="productoSeleccionado?.imagen"
             class="img-fluid mb-3"
@@ -72,7 +68,6 @@
           />
           <p class="text-muted">{{ productoSeleccionado?.descripcion }}</p>
 
-          <!-- Color -->
           <div class="mb-3">
             <label class="form-label">Color</label>
             <select
@@ -87,7 +82,6 @@
             </select>
           </div>
 
-          <!-- Talla -->
           <div class="mb-3">
             <label class="form-label">Talla</label>
             <select
@@ -102,19 +96,22 @@
             </select>
           </div>
 
-          <!-- Cantidad -->
           <div class="mb-3">
             <label class="form-label">Cantidad</label>
             <input
               type="number"
               class="form-control"
               min="1"
+              max="{{ productoSeleccionado?.cantidad }}"
               [(ngModel)]="cantidad"
               [ngModelOptions]="{ standalone: true }"
             />
+            <div *ngIf="productoSeleccionado?.cantidad !== undefined">
+              <small class="text-muted">Stock disponible: {{ productoSeleccionado?.cantidad }}</small>
+            </div>
+            <div *ngIf="mensajeStock" class="alert alert-danger mt-2">{{ mensajeStock }}</div>
           </div>
 
-          <!-- Precio -->
           <p class="fs-4 text-primary">
             {{ productoSeleccionado?.precio }}€
           </p>

@@ -22,7 +22,7 @@ export class RegisterComponent {
       nombre: ['', Validators.required],
       apellido1: ['', Validators.required],
       apellido2: [''],
-      direccion: ['', Validators.required], // ✅ campo añadido
+      direccion: ['', Validators.required],
       correo: ['', [Validators.required, Validators.email]],
       telefono: ['', Validators.required],
       password: ['', Validators.required],

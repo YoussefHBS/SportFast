@@ -14,7 +14,7 @@ class AuthController extends Controller
      $validated = $request->validate([
         'nombre' => 'required',
         'apellido1' => 'required',
-        'direccion' => 'required', // 👈 ¡Debe estar aquí!
+        'direccion' => 'required',
         'correo' => 'required|email|unique:cliente',
         'telefono' => 'required',
         'password' => 'required|confirmed',
@@ -23,7 +23,7 @@ class AuthController extends Controller
      $cliente = Cliente::create([
         'nombre' => $request->nombre,
         'apellido1' => $request->apellido1,
-        'direccion' => $request->direccion, // 👈 ¡También aquí!
+        'direccion' => $request->direccion,
         'correo' => $request->correo,
         'telefono' => $request->telefono,
         'password' => bcrypt($request->password),
@@ -31,10 +31,7 @@ class AuthController extends Controller
     ]);
 
 
-    return response()->json([
-        'message' => 'Usuario registrado correctamente',
-        'cliente' => $cliente,
-    ], 201);
+    return response()->json();
 }
 
 
@@ -65,9 +62,7 @@ class AuthController extends Controller
     {
         $request->user()->currentAccessToken()->delete();
 
-        return response()->json([
-            'mensaje' => 'Sesión cerrada correctamente.',
-        ]);
+        return response()->json();
     }
 
     public function user(Request $request)

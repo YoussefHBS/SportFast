@@ -26,7 +26,7 @@ class Cliente extends Authenticatable
 
     protected $hidden = [
         'password',
-        'remember_token', // aunque no uses login web, por convención
+        'remember_token',
     ];
 
     public function direcciones(): HasMany

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { RouterModule, RouterLink, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Producto } from './modelos/producto';
@@ -11,14 +11,8 @@ import { NavigationEnd } from '@angular/router';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    RouterOutlet,
-    RouterLink,
-    RouterModule,    // Necesario para routerLink
-    CommonModule     // Necesario para *ngIf, *ngFor
-  ],
+  imports: [RouterOutlet,RouterLink,RouterModule,CommonModule],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
   title = 'sportfastFrontend';
@@ -26,9 +20,11 @@ export class AppComponent implements OnInit {
   currentYear = new Date().getFullYear();
   cliente: any = null;
 
+  @ViewChild('offcanvasNavbar', { static: false }) offcanvasNavbar?: ElementRef;
+
   constructor(
     public carritoService: CarritoService,
-    private authService: AuthService,  // <- inyectado aquí
+    private authService: AuthService,
     public router: Router,
     public auth: AuthService
   ) {}
@@ -42,10 +38,8 @@ export class AppComponent implements OnInit {
       this.authService.getUser().subscribe();
     }
 
-    // 👇 Escuchar cambios de ruta
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        // Oculta layout si estás en /admin
         this.mostrarLayout = !event.urlAfterRedirects.startsWith('/admin');
       }
     });
@@ -55,10 +49,20 @@ export class AppComponent implements OnInit {
     this.authService.logout().subscribe();
   }
 
-   mostrarLayout: boolean = true; // Ahora es una propiedad, no un getter
+   mostrarLayout: boolean = true;
 
 
   get esAdmin(): boolean {
   return this.auth.esAdmin();
 }
+  // ayuda de chtgpt 
+  cerrarOffcanvas() {
+    const offcanvas = document.getElementById('offcanvasNavbar');
+    if (offcanvas) {
+      // Bootstrap 5 Offcanvas
+      // @ts-ignore
+      const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvas);
+      bsOffcanvas.hide();
+    }
+  }
 }

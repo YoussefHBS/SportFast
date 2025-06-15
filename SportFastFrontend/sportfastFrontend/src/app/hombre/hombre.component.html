@@ -1,7 +1,6 @@
 <div class="container py-5" role="main" aria-label="Ropa deportiva para hombre">
   <h1 class="text-center mb-4" tabindex="0">Ropa Deportiva para Hombre</h1>
 
-  <!-- Búsqueda -->
   <div class="mb-4">
     <input
       type="text"
@@ -12,7 +11,6 @@
     />
   </div>
 
-  <!-- Lista de productos -->
   <div class="row g-4">
     <div class="col-md-6 col-lg-4" *ngFor="let producto of productosFiltrados">
       <div class="card h-100 shadow-sm border-0" tabindex="0" aria-label="Producto">
@@ -26,12 +24,10 @@
           <h5 class="card-title fw-bold">{{ producto.nombre }}</h5>
           <p class="text-muted mb-2">{{ producto.descripcion }}</p>
 
-          <!-- PRECIO en amarillo -->
           <p class="fs-5 text-warning fw-semibold mb-2">
             {{ producto.precio }}€
           </p>
 
-          <!-- Botón de detalles -->
           <button
             class="btn btn-outline-dark mt-auto"
             (click)="abrirModal(producto)"
@@ -43,7 +39,6 @@
     </div>
   </div>
 
-  <!-- Modal de producto -->
   <div
     class="modal fade"
     [ngClass]="{ show: modalAbierto }"
@@ -64,6 +59,8 @@
         </div>
 
         <div class="modal-body">
+          <div *ngIf="productoSeleccionado && productoSeleccionado.cantidad === 0" class="alert alert-danger">Producto agotado</div>
+          <div *ngIf="productoSeleccionado && productoSeleccionado.cantidad > 0 && productoSeleccionado.cantidad <= 3" class="alert alert-warning">¡Quedan pocas unidades!</div>
           <img
             [src]="productoSeleccionado?.imagen"
             class="img-fluid mb-3"
@@ -71,7 +68,6 @@
           />
           <p class="text-muted">{{ productoSeleccionado?.descripcion }}</p>
 
-          <!-- Color -->
           <div class="mb-3">
             <label class="form-label">Color</label>
             <select
@@ -86,7 +82,6 @@
             </select>
           </div>
 
-          <!-- Talla -->
           <div class="mb-3">
             <label class="form-label">Talla</label>
             <select
@@ -101,7 +96,6 @@
             </select>
           </div>
 
-          <!-- Cantidad -->
           <div class="mb-3">
             <label class="form-label">Cantidad</label>
             <input
@@ -113,7 +107,6 @@
             />
           </div>
 
-          <!-- Precio -->
           <p class="fs-4 text-primary">
             {{ productoSeleccionado?.precio }}€
           </p>

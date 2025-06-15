@@ -9,7 +9,7 @@ export interface Producto {
   imagen?: string;
   precio: number;
   cantidad: number;
-  categoria_id: number | null; // <- permite null
+  categoria_id: number | null;
   categoria?: Categoria;
   colores?: Color[];
   tallas?: Talla[];

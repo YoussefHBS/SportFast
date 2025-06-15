@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductoService } from '../services/producto.service';
 import { Producto } from '../modelos/producto';
-
+import { CarritoService } from '../services/carrito.service';
+import { ItemCarrito } from '../modelos/itemcarrito';
 
 @Component({
   selector: 'app-pagina-principal',
@@ -21,6 +22,7 @@ export class PaginaPrincipalComponent implements OnInit {
   colorSeleccionado?: any;
   tallaSeleccionada?: any;
   cantidad: number = 1;
+  mensajeStock: string = '';
 
   coloresDisponibles = [
     { id: 1, nombre: 'Rojo' },
@@ -36,7 +38,10 @@ export class PaginaPrincipalComponent implements OnInit {
     { id: 4, nombre: 'XL' },
   ];
 
-  constructor(private productoService: ProductoService) {}
+  constructor(
+    private productoService: ProductoService,
+    private carritoService: CarritoService
+  ) {}
 
   ngOnInit(): void {
     this.cargarProductos();
@@ -68,6 +73,7 @@ export class PaginaPrincipalComponent implements OnInit {
     this.colorSeleccionado = null;
     this.tallaSeleccionada = null;
     this.cantidad = 1;
+    this.mensajeStock = '';
     this.modalAbierto = true;
   }
 
@@ -77,20 +83,33 @@ export class PaginaPrincipalComponent implements OnInit {
   }
 
   anadirACarrito(): void {
-    if (!this.colorSeleccionado || !this.tallaSeleccionada || this.cantidad < 1) {
-      alert('Por favor, selecciona color, talla y cantidad válida.');
+    if (!this.productoSeleccionado || !this.tallaSeleccionada || !this.colorSeleccionado) {
       return;
     }
-
-    // Aquí podrías usar un servicio de carrito
-    console.log('Añadiendo al carrito:', {
-      producto: this.productoSeleccionado,
-      color: this.colorSeleccionado,
-      talla: this.tallaSeleccionada,
-      cantidad: this.cantidad
-    });
-
-    alert('Producto añadido al carrito.');
+    if (this.productoSeleccionado.cantidad === 0) {
+      alert('Producto agotado');
+      return;
+    }
+    if (this.cantidad > this.productoSeleccionado.cantidad) {
+      this.mensajeStock = `No hay suficiente stock. Stock disponible: ${this.productoSeleccionado.cantidad}`;
+      return;
+    }
+    const item: ItemCarrito = {
+      nombre: this.productoSeleccionado.nombre,
+      pedido_id: 0,
+      producto_id: this.productoSeleccionado.id!,
+      cantidad: this.cantidad,
+      precio_unitario: this.productoSeleccionado.precio,
+      color: this.colorSeleccionado.nombre,
+      talla: this.tallaSeleccionada.nombre,
+      total: this.cantidad * this.productoSeleccionado.precio,
+    };
+    this.carritoService.agregarProducto(item);
+    this.productoSeleccionado.cantidad -= this.cantidad;
+    const idx = this.productos.findIndex(p => p.id === this.productoSeleccionado?.id);
+    if (idx !== -1) {
+      this.productos[idx].cantidad = this.productoSeleccionado.cantidad;
+    }
     this.cerrarModal();
   }
 }

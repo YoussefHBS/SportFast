@@ -43,21 +43,21 @@ class ProductoController extends Controller
     public function destroy($id)
     {
         Producto::destroy($id);
-        return response()->json(null, 204);
+        return response()->json();
     }
 
     public function asignarColores(Request $request, $id)
 {
     $producto = Producto::findOrFail($id);
-    $producto->colores()->sync($request->input('colores')); // array de IDs
-    return response()->json(['mensaje' => 'Colores asignados correctamente.']);
+    $producto->colores()->sync($request->input('colores'));
+    return response()->json();
 }
 
 public function asignarTallas(Request $request, $id)
 {
     $producto = Producto::findOrFail($id);
-    $producto->tallas()->sync($request->input('tallas')); // array de IDs
-    return response()->json(['mensaje' => 'Tallas asignadas correctamente.']);
+    $producto->tallas()->sync($request->input('tallas'));
+    return response()->json();
 }
 
 }

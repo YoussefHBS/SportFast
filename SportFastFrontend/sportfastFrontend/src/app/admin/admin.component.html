@@ -5,8 +5,31 @@
       ⬅️ Volver a la página principal
     </button>
   </div>
-
-  <!-- Formulario para nuevo producto -->
+  <div *ngIf="mostrarMensaje" class="toast align-items-center text-bg-{{tipoMensaje}} border-0 show position-fixed top-0 end-0 m-3" style="z-index: 9999; min-width: 250px;">
+    <div class="d-flex">
+      <div class="toast-body">
+        {{ mensaje }}
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" (click)="mostrarMensaje = false"></button>
+    </div>
+  </div>
+  <div class="modal fade show" tabindex="-1" style="display: block; background: rgba(0,0,0,0.5);" *ngIf="mostrarModalEliminar">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirmar eliminación</h5>
+          <button type="button" class="btn-close" (click)="cancelarEliminar()"></button>
+        </div>
+        <div class="modal-body">
+          <p>¿Estás seguro de que deseas eliminar este producto?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="cancelarEliminar()">Cancelar</button>
+          <button type="button" class="btn btn-danger" (click)="eliminarConfirmado()">Eliminar</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="card mb-4">
     <div class="card-body">
       <h5 class="card-title">Añadir nuevo producto</h5>
@@ -41,8 +64,6 @@
       </form>
     </div>
   </div>
-
-  <!-- Lista de productos -->
   <div class="card">
     <div class="card-body">
       <h5 class="card-title">Productos existentes</h5>
@@ -54,7 +75,7 @@
             </div>
             <div>
               <button class="btn btn-sm btn-primary me-2" (click)="editar(p)">✏️ Editar</button>
-              <button class="btn btn-sm btn-danger" (click)="eliminar(p.id!)">🗑 Eliminar</button>
+              <button class="btn btn-sm btn-danger" (click)="confirmarEliminar(p.id!)">🗑 Eliminar</button>
             </div>
           </div>
 

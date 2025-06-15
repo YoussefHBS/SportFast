@@ -17,6 +17,12 @@ export class AdminComponent implements OnInit {
   nuevo: Producto = this.resetNuevo();
   editando: Producto | null = null;
 
+  mostrarModalEliminar: boolean = false;
+  idAEliminar: number | null = null;
+  mensaje: string = '';
+  tipoMensaje: 'success' | 'error' | '' = '';
+  mostrarMensaje: boolean = false;
+
   constructor
   (
     private productoService: ProductoService,
@@ -35,25 +41,44 @@ export class AdminComponent implements OnInit {
 
   guardar(): void {
     if (!this.nuevo.nombre || this.nuevo.precio <= 0 || this.nuevo.cantidad <= 0) {
-      alert('Por favor completa los campos obligatorios correctamente.');
+      this.mostrarToast('Por favor completa los campos obligatorios correctamente.', 'error');
       return;
     }
-
     if (!this.nuevo.categoria_id) {
-      alert('Selecciona una categoría');
+      this.mostrarToast('Selecciona una categoría', 'error');
       return;
     }
-
-    this.productoService.crearProducto(this.nuevo).subscribe(() => {
-      this.nuevo = this.resetNuevo();
-      this.cargar();
+    this.productoService.crearProducto(this.nuevo).subscribe({
+      next: () => {
+        this.nuevo = this.resetNuevo();
+        this.cargar();
+        this.mostrarToast('Producto guardado correctamente.', 'success');
+      },
+      error: () => this.mostrarToast('Error al guardar el producto.', 'error')
     });
   }
 
-  eliminar(id: number): void {
-    if (confirm('¿Estás seguro de eliminar este producto?')) {
-      this.productoService.eliminarProducto(id).subscribe(() => this.cargar());
-    }
+  confirmarEliminar(id: number): void {
+    this.idAEliminar = id;
+    this.mostrarModalEliminar = true;
+  }
+
+  eliminarConfirmado(): void {
+    if (this.idAEliminar == null) return;
+    this.productoService.eliminarProducto(this.idAEliminar).subscribe({
+      next: () => {
+        this.cargar();
+        this.mostrarToast('Producto eliminado correctamente.', 'success');
+      },
+      error: () => this.mostrarToast('Error al eliminar el producto.', 'error')
+    });
+    this.mostrarModalEliminar = false;
+    this.idAEliminar = null;
+  }
+
+  cancelarEliminar(): void {
+    this.mostrarModalEliminar = false;
+    this.idAEliminar = null;
   }
 
   editar(p: Producto): void {
@@ -62,15 +87,25 @@ export class AdminComponent implements OnInit {
 
   actualizar(): void {
     if (!this.editando) return;
-
-    this.productoService.actualizarProducto(this.editando.id!, this.editando).subscribe(() => {
-      this.editando = null;
-      this.cargar();
+    this.productoService.actualizarProducto(this.editando.id!, this.editando).subscribe({
+      next: () => {
+        this.editando = null;
+        this.cargar();
+        this.mostrarToast('Producto actualizado correctamente.', 'success');
+      },
+      error: () => this.mostrarToast('Error al actualizar el producto.', 'error')
     });
   }
 
   cancelar(): void {
     this.editando = null;
+  }
+
+  mostrarToast(mensaje: string, tipo: 'success' | 'error') {
+    this.mensaje = mensaje;
+    this.tipoMensaje = tipo;
+    this.mostrarMensaje = true;
+    setTimeout(() => this.mostrarMensaje = false, 2500);
   }
 
   resetNuevo(): Producto {

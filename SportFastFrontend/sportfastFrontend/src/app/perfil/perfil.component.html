@@ -11,8 +11,4 @@
     <p><strong>Teléfono:</strong> {{ usuario.telefono || 'No registrado' }}</p>
     <p><strong>Dirección:</strong> {{ usuario.direccion || 'No registrada' }}</p>
   </div>
-
-  <div *ngIf="!cargando && !usuario" class="alert alert-warning text-center" role="alert">
-    No se pudo cargar la información del perfil.
-  </div>
 </div>

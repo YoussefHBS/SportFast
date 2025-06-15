@@ -10,6 +10,7 @@ class StripeController extends Controller
 {
     public function crearSesion(Request $request)
     {
+        // ayuda de ChatGP
         Stripe::setApiKey(config('services.stripe.secret'));
 
         $lineItems = collect($request->input('items'))->map(function ($item) {

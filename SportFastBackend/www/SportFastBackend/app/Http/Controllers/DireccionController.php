@@ -33,6 +33,6 @@ class DireccionController extends Controller
     public function destroy($id)
     {
         Direccion::destroy($id);
-        return response()->json(null, 204);
+        return response()->json();
     }
 }

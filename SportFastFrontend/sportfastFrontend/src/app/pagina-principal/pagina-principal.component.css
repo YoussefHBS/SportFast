@@ -1,0 +1,30 @@
+.modal.fade[aria-modal="true"] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.4);
+  z-index: 1050;
+  padding: 0 !important;
+}
+
+.modal-dialog {
+  margin: auto;
+  max-width: 420px;
+  width: 95vw;
+}
+
+.modal-content {
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  border: none;
+}
+
+@media (max-width: 576px) {
+  .modal-dialog {
+    max-width: 98vw;
+    margin: 0;
+  }
+  .modal-content {
+    border-radius: 0.5rem;
+  }
+}

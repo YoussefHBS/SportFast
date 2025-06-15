@@ -66,24 +66,26 @@ export class MujerComponent implements OnInit {
     }
   
     anadirACarrito(): void {
-    if (!this.productoSeleccionado || !this.tallaSeleccionada || !this.colorSeleccionado) {
-      console.warn('Faltan datos para añadir al carrito');
-      return;
+      if (!this.productoSeleccionado || !this.tallaSeleccionada || !this.colorSeleccionado) {
+        return;
+      }
+      if (this.productoSeleccionado.cantidad === 0) {
+        alert('Producto agotado');
+        return;
+      }
+  
+      const item: ItemCarrito = {
+        nombre: this.productoSeleccionado.nombre,
+        pedido_id: 0, 
+        producto_id: this.productoSeleccionado.id!,
+        cantidad: this.cantidad,
+        precio_unitario: this.productoSeleccionado.precio,
+        color: this.colorSeleccionado.nombre,
+        talla: this.tallaSeleccionada.nombre,
+        total: this.cantidad * this.productoSeleccionado.precio,
+      };
+  
+      this.carritoService.agregarProducto(item);
+      this.cerrarModal();
     }
-  
-    const item: ItemCarrito = {
-      nombre: this.productoSeleccionado.nombre,
-      pedido_id: 0, // Pendiente, se asigna al crear pedido
-      producto_id: this.productoSeleccionado.id!,
-      cantidad: this.cantidad,
-      precio_unitario: this.productoSeleccionado.precio,
-      color: this.colorSeleccionado.nombre,
-      talla: this.tallaSeleccionada.nombre,
-      total: this.cantidad * this.productoSeleccionado.precio,
-    };
-  
-    this.carritoService.agregarProducto(item);
-    this.cerrarModal();
   }
-  }
-  

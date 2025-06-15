@@ -17,7 +17,7 @@ class ColorController extends Controller
     {
         $color = Color::find($id);
         if (!$color) {
-            return response()->json(['message' => 'Color no encontrado'], 404);
+            return response()->json();
         }
         return response()->json($color);
     }
@@ -39,7 +39,7 @@ class ColorController extends Controller
     {
         $color = Color::find($id);
         if (!$color) {
-            return response()->json(['message' => 'Color no encontrado'], 404);
+            return response()->json();
         }
 
         $request->validate([
@@ -56,10 +56,10 @@ class ColorController extends Controller
     {
         $color = Color::find($id);
         if (!$color) {
-            return response()->json(['message' => 'Color no encontrado'], 404);
+            return response()->json();
         }
         $color->delete();
 
-        return response()->json(['message' => 'Color eliminado']);
+        return response()->json();
     }
 }

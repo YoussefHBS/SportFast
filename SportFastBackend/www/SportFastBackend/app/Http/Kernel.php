@@ -8,8 +8,8 @@ class Kernel extends HttpKernel
 {
     protected $middlewareGroups = [
     'api' => [
-        \App\Http\Middleware\Cors::class, // tu middleware CORS
-        \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class, // Aquí, NO en $routeMiddleware
+        \App\Http\Middleware\Cors::class,
+        \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
         'throttle:api',
         \Illuminate\Routing\Middleware\SubstituteBindings::class,
     ],
@@ -19,6 +19,6 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'cors' => \App\Http\Middleware\Cors::class, // Esto es opcional si ya lo pones en api group
+        'cors' => \App\Http\Middleware\Cors::class,
     ];
 }

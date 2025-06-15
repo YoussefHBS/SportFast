@@ -13,6 +13,8 @@ import { ItemCarrito } from '../modelos/itemcarrito';
 export class CarritoComponent implements OnInit {
   productos: ItemCarrito[] = [];
   total: number = 0;
+  mostrarModalError: boolean = false;
+  mensajeError: string = '';
 
   constructor(private carritoService: CarritoService) {}
 
@@ -28,7 +30,14 @@ export class CarritoComponent implements OnInit {
   }
 
   pagar() {
-  this.carritoService.pagarConStripe();
-    this.carritoService.vaciarCarrito();
+  this.carritoService.pagarConStripe((mensaje: string) => {
+    this.mensajeError = mensaje;
+    this.mostrarModalError = true;
+  });
+  this.carritoService.vaciarCarrito();
+}
+
+  cerrarModalError() {
+    this.mostrarModalError = false;
   }
 }

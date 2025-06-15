@@ -10,7 +10,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class ProductoService {
-  private apiUrl = 'http://sportfast.zapto.org:8000/api/productos';
+  private apiUrl = '/api/productos';
 
 constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -23,12 +23,11 @@ private getAuthHeaders(): HttpHeaders {
   }
 
 getAdminProductos(): Observable<Producto[]> {
-  return this.http.get<Producto[]>('http://sportfast.zapto.org:8000/api/admin/productos', {
+  return this.http.get<Producto[]>('/api/admin/productos', {
     headers: this.authService.getAuthHeaders()
   });
 }
 
-  // Públicos
   getTodos(): Observable<Producto[]> {
     return this.http.get<Producto[]>(this.apiUrl);
   }
@@ -63,19 +62,19 @@ getAdminProductos(): Observable<Producto[]> {
 
 
   crearProducto(producto: Producto): Observable<Producto> {
-    return this.http.post<Producto>('http://sportfast.zapto.org:8000/api/admin/productos', producto, {
+    return this.http.post<Producto>('/api/admin/productos', producto, {
       headers: this.getAuthHeaders()
     });
   }
 
   eliminarProducto(id: number): Observable<any> {
-    return this.http.delete(`http://sportfast.zapto.org:8000/api/admin/productos/${id}`, {
+    return this.http.delete(`/api/admin/productos/${id}`, {
       headers: this.getAuthHeaders()
     });
   }
   actualizarProducto(id: number, producto: Producto): Observable<Producto> {
   return this.http.put<Producto>(
-    `http://sportfast.zapto.org:8000/api/admin/productos/${id}`,
+    `/api/admin/productos/${id}`,
     producto,
     { headers: this.getAuthHeaders() }
   );

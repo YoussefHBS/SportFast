@@ -1,6 +1,5 @@
 <nav *ngIf="mostrarLayout" class="navbar navbar-expand-md navbar-dark bg-dark sticky-top shadow-sm p-0">
   <div class="container-fluid d-flex align-items-center w-100 px-4" style="min-width:0;">
-    <!-- IZQUIERDA: Secciones (solo visible en md o más) -->
     <ul class="navbar-nav flex-row flex-grow-1 justify-content-start d-none d-md-flex mx-4" style="gap: 1.5rem;">
       <li class="nav-item"><a class="nav-link fs-5" routerLink="/mujer">👩 Mujer</a></li>
       <li class="nav-item"><a class="nav-link fs-5" routerLink="/hombre">👨 Hombre</a></li>
@@ -8,12 +7,10 @@
       <li class="nav-item"><a class="nav-link fs-5" routerLink="/nina">👧 Niña</a></li>
     </ul>
 
-    <!-- CENTRO: Logo -->
     <a class="navbar-brand fw-bold fs-4 mx-4 flex-shrink-0" routerLink="/">
       <img src="img/general/logo.svg" alt="logo de la tienda" style="height: 60px;" />
     </a>
 
-    <!-- DERECHA: Info y perfil (solo visible en md o más) -->
     <ul class="navbar-nav flex-row flex-grow-1 justify-content-end align-items-center d-none d-md-flex mx-4" style="gap: 1.5rem;">
       <li class="nav-item"><a class="nav-link fs-5" routerLink="/mas-informacion">ℹ️ Más Información</a></li>
 
@@ -44,13 +41,11 @@
       </ng-template>
     </ul>
 
-    <!-- Botón del offcanvas SOLO visible en pantallas pequeñas -->
     <button class="navbar-toggler d-md-none ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
   </div>
 
-  <!-- OFFCANVAS para móviles -->
   <div class="offcanvas offcanvas-end text-bg-dark d-md-none" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menú</h5>
@@ -58,22 +53,22 @@
     </div>
     <div class="offcanvas-body">
       <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 text-center">
-        <li class="nav-item"><a class="nav-link fs-5" routerLink="/mujer">👩 Mujer</a></li>
-        <li class="nav-item"><a class="nav-link fs-5" routerLink="/hombre">👨 Hombre</a></li>
-        <li class="nav-item"><a class="nav-link fs-5" routerLink="/nino">👦 Niño</a></li>
-        <li class="nav-item"><a class="nav-link fs-5" routerLink="/nina">👧 Niña</a></li>
-        <li class="nav-item"><a class="nav-link fs-5" routerLink="/mas-informacion">ℹ️ Más Información</a></li>
+        <li class="nav-item"><a class="nav-link fs-5" routerLink="/mujer" (click)="cerrarOffcanvas()">👩 Mujer</a></li>
+        <li class="nav-item"><a class="nav-link fs-5" routerLink="/hombre" (click)="cerrarOffcanvas()">👨 Hombre</a></li>
+        <li class="nav-item"><a class="nav-link fs-5" routerLink="/nino" (click)="cerrarOffcanvas()">👦 Niño</a></li>
+        <li class="nav-item"><a class="nav-link fs-5" routerLink="/nina" (click)="cerrarOffcanvas()">👧 Niña</a></li>
+        <li class="nav-item"><a class="nav-link fs-5" routerLink="/mas-informacion" (click)="cerrarOffcanvas()">ℹ️ Más Información</a></li>
 
         <ng-container *ngIf="cliente; else noAuthMobile">
-          <li class="nav-item" *ngIf="esAdmin"><a routerLink="/admin" class="nav-link text-warning">⚙️ Panel Admin</a></li>
-          <li class="nav-item"><a class="nav-link fs-5" routerLink="/carrito">🛒 Carrito</a></li>
-          <li class="nav-item"><a class="nav-link fs-5" routerLink="/perfil">👤 {{ cliente.nombre }}</a></li>
-          <li class="nav-item"><a class="nav-link fs-5 text-danger" (click)="logout()">🚪 Cerrar sesión</a></li>
+          <li class="nav-item" *ngIf="esAdmin"><a routerLink="/admin" class="nav-link text-warning" (click)="cerrarOffcanvas()">⚙️ Panel Admin</a></li>
+          <li class="nav-item"><a class="nav-link fs-5" routerLink="/carrito" (click)="cerrarOffcanvas()">🛒 Carrito</a></li>
+          <li class="nav-item"><a class="nav-link fs-5" routerLink="/perfil" (click)="cerrarOffcanvas()">👤 {{ cliente.nombre }}</a></li>
+          <li class="nav-item"><a class="nav-link fs-5 text-danger" (click)="logout(); cerrarOffcanvas()">🚪 Cerrar sesión</a></li>
         </ng-container>
 
         <ng-template #noAuthMobile>
-          <li class="nav-item"><a class="nav-link fs-5" routerLink="/login">🔐 Login</a></li>
-          <li class="nav-item"><a class="nav-link fs-5" routerLink="/register">📝 Register</a></li>
+          <li class="nav-item"><a class="nav-link fs-5" routerLink="/login" (click)="cerrarOffcanvas()">🔐 Login</a></li>
+          <li class="nav-item"><a class="nav-link fs-5" routerLink="/register" (click)="cerrarOffcanvas()">📝 Register</a></li>
         </ng-template>
       </ul>
     </div>
@@ -82,16 +77,13 @@
 
 
 
-<!-- Contenido principal -->
 <main class="container mt-4">
   <router-outlet></router-outlet>
 </main>
 
-<!-- Footer -->
 <footer *ngIf="mostrarLayout" class="bg-dark text-light pt-3 mt-4">
   <div class="container">
     <div class="row text-center text-md-start small">
-      <!-- Contacto -->
       <div class="col-md-4 mb-3">
         <h6 class="fw-bold mb-2">📞 Contacto</h6>
         <p class="mb-1"><i class="bi bi-envelope-fill me-2"></i> contacto&#64;sportfast.com</p>
@@ -99,7 +91,6 @@
         <p class="mb-0"><i class="bi bi-geo-alt-fill me-2"></i> Ronda 4001, Almería, España</p>
       </div>
 
-      <!-- Mapa -->
       <div class="col-md-4 mb-3">
         <h6 class="fw-bold mb-2">📍 Encuéntranos</h6>
         <iframe

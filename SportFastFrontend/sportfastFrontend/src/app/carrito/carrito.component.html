@@ -1,6 +1,23 @@
 <div class="container mt-4" role="main" aria-label="Carrito de compras">
   <h2 tabindex="0">Carrito de Compras</h2>
 
+  <div class="modal fade show" tabindex="-1" style="display: block; background: rgba(0,0,0,0.5);" *ngIf="mostrarModalError">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Error en el pago</h5>
+          <button type="button" class="btn-close" (click)="cerrarModalError()"></button>
+        </div>
+        <div class="modal-body">
+          <p>{{ mensajeError }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="cerrarModalError()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div *ngIf="productos.length === 0">
     <p>Tu carrito está vacío.</p>
   </div>
@@ -16,13 +33,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let producto of productos">
+      <tr *ngFor="let producto of productos; let i = index">
         <td>{{ producto.nombre }}</td>
         <td>{{ producto.precio_unitario }}€</td>
         <td>{{ producto.cantidad }}</td>
         <td>{{ producto.total }}€</td>
         <td>
-          <button class="btn btn-danger btn-sm" (click)="eliminar(producto.producto_id)" aria-label="Eliminar del carrito">Eliminar</button>
+          <button class="btn btn-danger btn-sm" (click)="eliminar(i)" aria-label="Eliminar del carrito">Eliminar</button>
         </td>
       </tr>
     </tbody>

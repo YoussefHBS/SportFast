@@ -43,20 +43,28 @@ class ProductosSeeder extends Seeder
                 'categoria_id' => 2
             ],
             [
+                'nombre' => 'Conjunto Mujer Negro',
+                'descripcion' => 'Sujetador deportivo negro, pantalon corto negro',
+                'imagen' => 'img/mujer/mujer2.svg',
+                'precio' => 17.99,
+                'cantidad' => 10,
+                'categoria_id' => 2
+            ],
+            [
+                'nombre' => 'Conjunto Mujer ligero',
+                'descripcion' => 'Sujetador deportivo negro, pantalon corto rojo',
+                'imagen' => 'img/mujer/mujer6.svg',
+                'precio' => 17.99,
+                'cantidad' => 10,
+                'categoria_id' => 2
+            ],
+            [
                 'nombre' => 'Conjunto de Ciclismo Infantil',
                 'descripcion' => 'Jersey manga corta, Pantalón corto con pechera',
-                'imagen' => 'img/nino/nino5.svg',
+                'imagen' => 'img/nino/nino3.svg',
                 'precio' => 8.99,
                 'cantidad' => 10,
                 'categoria_id' => 3
-            ],
-            [
-                'nombre' => 'Conjunto Mujer Rojo y Negro',
-                'descripcion' => 'Sujetador negro, Pantalón corto rojo con rayas blancas',
-                'imagen' => 'img/mujer/mujer6.svg',
-                'precio' => 29.99,
-                'cantidad' => 10,
-                'categoria_id' => 2
             ],
             [
                 'nombre' => 'Juego de Snowboard Infantil',
@@ -67,36 +75,60 @@ class ProductosSeeder extends Seeder
                 'categoria_id' => 3
             ],
             [
+                'nombre' => 'Conjunto Fútbol Infantil',
+                'descripcion' => 'Camiseta azul, Short negro, Medias azules',
+                'imagen' => 'img/nino/nino2.svg',
+                'precio' => 12.99,
+                'cantidad' => 10,
+                'categoria_id' => 3
+            ], 
+            [
+                'nombre' => 'Conjunto Judo Infantil',
+                'descripcion' => 'Traje blanco, Cinturón naranja, Pantalón reforzado',
+                'imagen' => 'img/nina/nina4.svg',
+                'precio' => 49.99,
+                'cantidad' => 10,
+                'categoria_id' => 4
+            ],
+            [
+                'nombre' => 'Conjunto Niño Casual',
+                'descripcion' => 'Camiseta verde, Pantalón corto beige',
+                'imagen' => 'img/nino/nino2.svg',
+                'precio' => 15.99,
+                'cantidad' => 10,
+                'categoria_id' => 3
+            ],
+            [
+                'nombre' => 'Conjunto Judo Infantil',
+                'descripcion' => 'Traje blanco, Cinturón naranja, Pantalón reforzado',
+                'imagen' => 'img/nino/nino4.svg',
+                'precio' => 49.99,
+                'cantidad' => 10,
+                'categoria_id' => 3
+            ],
+            [
+                'nombre' => 'Conjunto Niña Rosa',
+                'descripcion' => 'Camiseta rosa, Pantalón corto rosa, Gorra de tenis rosa',
+                'imagen' => 'img/nina/nina2.svg',
+                'precio' => 29.99,
+                'cantidad' => 10,
+                'categoria_id' => 4
+            ],
+            [
+                'nombre' => 'Conjunto Niña Deportiva',
+                'descripcion' => 'pantalon corto, camiseta de manga corta banca',
+                'imagen' => 'img/nina/nina3.svg',
+                'precio' => 27.99,
+                'cantidad' => 10,
+                'categoria_id' => 4
+            ],
+            [
                 'nombre' => 'Conjunto Fútbol Americano',
                 'descripcion' => 'Pantalón blanco, Camiseta azul, Casco azul y blanco',
                 'imagen' => 'img/hombre/rugby.svg',
                 'precio' => 199.99,
                 'cantidad' => 10,
                 'categoria_id' => 1
-            ],
-            [
-                'nombre' => 'Conjunto Niña Rosa',
-                'descripcion' => 'Camiseta rosa, Pantalón corto rosa, Gorra de tenis rosa',
-                'imagen' => 'img/nino/nino2.svg',
-                'precio' => 29.99,
-                'cantidad' => 10,
-                'categoria_id' => 3
-            ],
-            [
-                'nombre' => 'Conjunto Mujer con Zapatillas',
-                'descripcion' => 'Sujetador negro, Short negro, Zapatillas Nike negras',
-                'imagen' => 'img/mujer/mujer2.svg',
-                'precio' => 31.99,
-                'cantidad' => 10,
-                'categoria_id' => 2
-            ],
-            [
-                'nombre' => 'Conjunto Fútbol Infantil',
-                'descripcion' => 'Camiseta azul, Short negro, Medias azules',
-                'imagen' => 'img/nino/nino3.svg',
-                'precio' => 12.99,
-                'cantidad' => 10,
-                'categoria_id' => 3
             ],
             [
                 'nombre' => 'Conjunto Baloncesto Hombre',
@@ -123,14 +155,6 @@ class ProductosSeeder extends Seeder
                 'categoria_id' => 2
             ],
             [
-                'nombre' => 'Conjunto Niña Gris',
-                'descripcion' => 'Sujetador gris, Short gris',
-                'imagen' => 'img/nino/nino4.svg',
-                'precio' => 5.99,
-                'cantidad' => 10,
-                'categoria_id' => 3
-            ],
-            [
                 'nombre' => 'Conjunto Mujer Rosa y Negro',
                 'descripcion' => 'Sujetador rosa, Leggins negro',
                 'imagen' => 'img/mujer/mujer1.svg',
@@ -147,12 +171,12 @@ class ProductosSeeder extends Seeder
                 'categoria_id' => 1
             ],
             [
-                'nombre' => 'Conjunto Judo Infantil',
-                'descripcion' => 'Traje blanco, Cinturón naranja, Pantalón reforzado',
-                'imagen' => '/img/nino/nino6.svg',
-                'precio' => 49.99,
+                'nombre' => 'Juego de Snowboard Infantil',
+                'descripcion' => 'Akasha Wide, Binding Master, Boots',
+                'imagen' => 'img/nina/nina1.svg',
+                'precio' => 95.90,
                 'cantidad' => 10,
-                'categoria_id' => 3
+                'categoria_id' => 4
             ],
         ];
 

@@ -14,7 +14,6 @@ class CategoriasSeeder extends Seeder
         Categoria::create(['nombre' => 'nino']);
         Categoria::create(['nombre' => 'nina']);
 
-        // Más categorías si quieres
     }
 }
 
