@@ -28,3 +28,13 @@ jobs:
           file: ./SportFastFrontend/sportfastFrontend/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/sportfast-frontend:latest
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./SportFastFronten/www/sportFast
+          file: ./SportFastFrontend/sportfastFrontend/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/sportfast-frontend:latest
+
+          
