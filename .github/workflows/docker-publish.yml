@@ -32,9 +32,9 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./SportFastFronten/www/sportFast
+          context: ./SportFastbackend/www/sportFastbackend
           file: ./SportFastFrontend/sportfastFrontend/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/sportfast-frontend:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/sportfast-backend:latest
 
           
